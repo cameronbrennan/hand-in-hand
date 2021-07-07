@@ -1,3 +1,3 @@
 Sample Test here
 
-This is an example of how git pull requests work
+Updating the readme for branch demo
