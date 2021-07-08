@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hand in Hand</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+    <header class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <ul>
+                    <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Hand in Hand</a></li>
+                </ul>
+                <ul class="right">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="{% url 'providerportal' %}">Provider Portal</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="sub-nav-wrapper">
+        <ul class="center" id="provider-sub-menu">
+            <li class='sub'><a href="{% url 'providerprofile' %}">Your Profile</a></li>
+            <li class='sub'><a href="{% url 'clients' %}">Your Clients</a></li>
+            <li class='sub'><a href="{% url 'yourforms' %}">Your Forms</a></li>
+
+        </ul>
+    </div>
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+  	<footer class="page-footer">
+       <div class="right">All Rights Reserved, &copy; 2021 Hand in Hand &nbsp;</div>
+    </footer>
+</body>
+</html>
