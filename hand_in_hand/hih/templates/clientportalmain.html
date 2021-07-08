@@ -20,11 +20,17 @@
                 <ul class="right">
                     <li><a href="/">Home</a></li>
 		            <li><a href="{% url 'clientportal' %}">Client Portal</a></li>
-                    <li><a href="{% url 'providerportal' %}">Provider Portal</a></li>
                 </ul>
             </div>
         </nav>
     </header>
+    <div class="sub-nav-wrapper">
+        <ul class="center">
+            <li class='sub'><a href="{% url 'clientprofile' %}">Your Profile</a></li>
+            <li class='sub'><a href="{% url 'providers' %}">Your Providers</a></li>
+            <li class='sub'><a href="{% url 'yourforms' %}">Your Forms</a></li>
+        </ul>
+    </div>
     <main class="container">
         {% block content %}
         {% endblock %}

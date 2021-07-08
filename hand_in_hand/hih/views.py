@@ -5,16 +5,16 @@ def home(request):
   return render(request, 'home.html')
 
 def providerprofile(request):
-  return render(request, 'providerprofile.html')
+  return render(request, 'provider/providerprofile.html')
 
 def yourclients(request):
-  return render(request, 'yourclients.html')
+  return render(request, 'provider/yourclients.html')
 
 def clientprofile(request):
-  return render(request, 'clientprofile.html')
+  return render(request, 'client/clientprofile.html')
 
 def yourproviders(request):
-  return render(request, 'yourproviders.html')
+  return render(request, 'client/yourproviders.html')
 
 def yourforms(request):
   return render(request, 'yourforms.html')
