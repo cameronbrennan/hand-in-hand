@@ -24,14 +24,14 @@
             </div>
         </nav>
     </header>
-    <div class="sub-nav-wrapper">
+    <div class="sub-nav-wrapper"> 
         <ul class="center">
             {% if user.is_authenticated %}
             <li class='sub'><a href="{% url 'clientprofile' %}">Your Profile</a></li>
             <li class='sub'><a href="{% url 'providers' %}">Your Providers</a></li>
             <li class='sub'><a href="{% url 'yourforms' %}">Your Forms</a></li>
             {% else %}
-            <li class='sub'><a href="{% url 'login' %}">Client - Login</a></li>
+            <li class='sub'><a href="{% url 'clientlogin' %}">Client - Login</a></li>
             <li class='sub'><a href="{% url 'clientsignup' %}">Client - Sign-up</a></li>
           {% endif %}
         

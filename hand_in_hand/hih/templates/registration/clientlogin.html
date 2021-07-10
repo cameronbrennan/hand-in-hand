@@ -1,9 +1,12 @@
 {% extends 'clientportalmain.html' %}
 {% block content %}
 
+
+<h1>stuff</h1>
 <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.as_p }} 
+    <!-- FORM FOR LIG IN FOR PROVIDER -->
     <input type="submit" class="btn" value="login">
     <input type="hidden" name="next" value="{{ next }}">
   </form>
