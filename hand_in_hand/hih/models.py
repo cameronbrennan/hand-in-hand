@@ -37,3 +37,6 @@ class Assignment(models.Model):
 
 class Test(models.Model):
     pass
+
+class Test2(models.Model):
+    pass
