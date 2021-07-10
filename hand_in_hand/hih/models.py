@@ -10,6 +10,7 @@ class Client(models.Model):
     phone = models.CharField(max_length=100)
     age = models.IntegerField()
     location = models.IntegerField() #zipcode? can change to str later
+    user = models.ForeignKey(User, on_delete=models.CASCADE) #add user type?
     def __str__(self):
         return self.name
     
@@ -22,6 +23,7 @@ class Provider(models.Model):
     certification = models.CharField(max_length=150)
     certnum = models.CharField(max_length=100)
     location = models.IntegerField() #zipcode? can change to str later
+    user = models.ForeignKey(User, on_delete=models.CASCADE) #add user type?
     def __str__(self):
         return self.name
     
