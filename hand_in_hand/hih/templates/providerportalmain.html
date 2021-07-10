@@ -26,9 +26,14 @@
     </header>
     <div class="sub-nav-wrapper">
         <ul class="center" id="provider-sub-menu">
+            {% if user.is_authenticated %}
             <li class='sub'><a href="{% url 'providerprofile' %}">Your Profile</a></li>
             <li class='sub'><a href="{% url 'clients' %}">Your Clients</a></li>
             <li class='sub'><a href="{% url 'yourforms' %}">Your Forms</a></li>
+            {% else %}
+            <li class='sub'><a href="{% url 'login' %}">Provider - Login</a></li>
+            <li class='sub'><a href="{% url 'providersignup' %}">Provider - Sign-up</a></li>
+          {% endif %}
 
         </ul>
     </div>
