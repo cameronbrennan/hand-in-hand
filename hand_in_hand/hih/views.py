@@ -31,9 +31,14 @@ def signup(request):
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
- 
+
+
+def login_view(request):
+   return render(request, 'login_view.html')
 
 ####        CLIENT VIWES
+def clientlogin(request):
+  return render(request, 'registration/clientlogin.html') 
           
 def clientprofile(request):
   return render(request, 'client/clientprofile.html')
@@ -64,7 +69,10 @@ def clientsignup(request):
   return render(request, 'registration/clientsignup.html', context) 
  
 ####        PROVIDER VIEWS 
- 
+
+def providerlogin(request):
+  return render(request, 'registration/providerlogin.html') 
+
 def providerprofile(request):
   return render(request, 'provider/providerprofile.html')
 
