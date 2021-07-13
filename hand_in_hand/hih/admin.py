@@ -5,4 +5,3 @@ from .models import Client, Provider, Assignment
 admin.site.register(Client)
 admin.site.register(Provider)
 admin.site.register(Assignment)
-# admin.site.register(User)  

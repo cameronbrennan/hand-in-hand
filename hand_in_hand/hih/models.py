@@ -1,39 +1,50 @@
 from django.db import models
+from django.urls import reverse
 from datetime import date
 from django.contrib.auth.models import User
 
+# Django User model includes:
+# - username
+# - password
+# - email
+# - first_name
+# - last_name
+
 # Create your models here.
+# User Management options:
+# - Add 'Type' to the generalized 'USER' class (single user class instead of client and provider)
+# - 
+
 class Client(models.Model):
-    firstname = models.CharField(max_length=100)
-    lastname = models.CharField(max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    password = models.CharField(max_length=24)
     pronouns = models.CharField(max_length=50)
-    email = models.CharField(max_length=150)
     phone = models.CharField(max_length=100)
-    age = models.IntegerField()
-    last_login = models.CharField(max_length=400)
-    location = models.IntegerField() #zipcode? can change to str later
-    user = models.ForeignKey(User, on_delete=models.CASCADE) #add user type?
+    age = models.IntegerField() # switch to date field
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # location = models.IntegerField() #zipcode? can change to str later
     def __str__(self):
-        return self.name
-    
+        return self.first_name
+
 class Provider(models.Model):
-    firstname = models.CharField(max_length=100)
-    lastname = models.CharField(max_length=100)
-    pronouns = models.CharField(max_length=100)
-    email = models.CharField(max_length=150)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    password = models.CharField(max_length=24)
+    pronouns = models.CharField(max_length=50)
     phone = models.CharField(max_length=100)
-    about = models.TextField(max_length=500)
-    certification = models.CharField(max_length=150)
-    certnum = models.CharField(max_length=100)
-    last_login = models.CharField(max_length=400)
-    location = models.IntegerField() #zipcode? can change to str later
-    user = models.ForeignKey(User, on_delete=models.CASCADE) #add user type?
+    licensure = models.CharField(max_length=100)
     def __str__(self):
-        return self.name
+        return self.first_name
     
 
 class Assignment(models.Model):
     date = models.DateField('date assigned')
+    pass
 
 class Test(models.Model):
     pass
