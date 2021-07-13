@@ -29,10 +29,13 @@
             {% if user.is_authenticated %}
             <li class='sub'><a href="{% url 'clientprofile' %}">Your Profile</a></li>
             <li class='sub'><a href="{% url 'providers' %}">Your Providers</a></li>
+            <li class='sub'><a href="{% url 'gad7' %}">Fill out GAD-7</a><li>
             <li class='sub'><a href="{% url 'yourforms' %}">Your Forms</a></li>
             {% else %}
             <li class='sub'><a href="{% url 'clientlogin' %}">Client - Login</a></li>
             <li class='sub'><a href="{% url 'clientsignup' %}">Client - Sign-up</a></li>
+            DELETE THIS WHEN USER IS BACK TO FUNCTIONAL
+            <li class='sub'><a href="{% url 'gad7' %}">Fill out GAD-7</a><li>
           {% endif %}
         
         </ul>
