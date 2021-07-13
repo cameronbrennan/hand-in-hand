@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import ClientSignupForm, ProviderSignupForm, Test
+from .models import Assignment
 
 # Create your views here.
 def home(request):
@@ -66,7 +67,12 @@ def clientsignup(request):
   # A bad POST or a GET request, so render signup.html with an empty form
   form = ClientSignupForm()
   context = {'form': form, 'error_message': error_message}
-  return render(request, 'registration/clientsignup.html', context) 
+  return render(request, 'registration/clientsignup.html', context)
+
+# Complete gad7 view function
+def gad7(request):
+  model = Assignment.Gad7
+  return render(request, 'client/gad7.html', model)
  
 ####        PROVIDER VIEWS 
 

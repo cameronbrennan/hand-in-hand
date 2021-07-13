@@ -15,6 +15,7 @@ urlpatterns = [
   path('clproviders/', views.yourproviders, name='providers'),
   path('accounts/clientsignup/', views.clientsignup, name='clientsignup'),
   path('registration/clientlogin/', views.clientlogin, name='clientlogin'),
+  path('assignments/gad7/', views.gad7, name='gad7'),
   
   ##### PROVIDER URLS
   path('providers/portal/', views.providerportal, name='providerportal'),
@@ -22,5 +23,5 @@ urlpatterns = [
   path('prprofile/', views.providerprofile, name='providerprofile'),
   path('accounts/providersignup/', views.providersignup, name='providersignup'),
   path('registration/providerlogin/', views.providerlogin, name='providerlogin'),
-
+  # path('assignments/gad7/', views.gad7, name='gad7'),
 ]
