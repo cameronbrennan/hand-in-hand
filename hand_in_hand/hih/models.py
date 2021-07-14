@@ -73,9 +73,3 @@ class Gad7FormResponse(models.Model):
 
     def compute_score(self):
         return self.gad7_q1_response + self.gad7_q2_response + self.gad7_q3_response + self.gad7_q4_response + self.gad7_q5_response + self.gad7_q6_response + self.gad7_q7_response
-
-class Test(models.Model):
-    pass
-
-class Test2(models.Model):
-    pass
