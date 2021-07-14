@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'hand_in_hand.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hihdb'
+        'NAME': 'hih2'
     }
 }
 

@@ -1,2 +1,2 @@
 # Hand in Hand
-## Therapy for the digital world
+## Therapy for the digital world 

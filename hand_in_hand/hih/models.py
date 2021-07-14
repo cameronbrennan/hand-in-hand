@@ -14,7 +14,7 @@ class Client(models.Model):
     location = models.IntegerField() #zipcode? can change to str later
     # user = models.ForeignKey(User, on_delete=models.CASCADE) #add user type?
     def __str__(self):
-        return self.name
+        return self.firstname
     
 class Provider(models.Model):
     firstname = models.CharField(max_length=100)
@@ -29,7 +29,7 @@ class Provider(models.Model):
     location = models.IntegerField() #zipcode? can change to str later
     # user = models.ForeignKey(User, on_delete=models.CASCADE) #add user type?
     def __str__(self):
-        return self.name
+        return self.firstname
     
 class Assignment(models.Model):
     date = models.DateField('date assigned')
@@ -73,3 +73,10 @@ class Gad7FormResponse(models.Model):
 
     def compute_score(self):
         return self.gad7_q1_response + self.gad7_q2_response + self.gad7_q3_response + self.gad7_q4_response + self.gad7_q5_response + self.gad7_q6_response + self.gad7_q7_response
+
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True)
+    # provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return f"Photo @{self.url}"

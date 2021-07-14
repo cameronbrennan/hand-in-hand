@@ -2,7 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import ClientSignupForm, ProviderSignupForm, Test
-from .models import Assignment, Gad7FormResponse
+from .models import Assignment, Gad7FormResponse, Client, Provider, Photo
+
+#### AWS PHOTO STUFF HERE
+import boto3
+from boto3 import client
+import uuid
+S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
+BUCKET = 'catcollector12'
 
 # Create your views here.
 def home(request):
@@ -41,7 +48,8 @@ def login_view(request):
 def clientlogin(request):
   return render(request, 'registration/clientlogin.html') 
           
-def clientprofile(request):  
+def clientprofile(request):
+  print('client profile hit')  
   gad7_form_responses = [
     {
       'gad7_response_q1': 1, 
@@ -114,7 +122,40 @@ def uploadgad7(request):
     gad7_response_q7=request.POST.get('gad7-choice-6')
   )
   g.save()
-  return redirect('clientprofile')
+  print('upload gad7 hit')
+  return redirect('home')
+
+def add_photo_client(request, client_id):
+  photo_file = request.FILES.get('photo-file', None)
+  print(request.FILES.get('photo-file'))
+  if photo_file:
+    s3 = boto3.client('s3')
+    key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+    try:
+      # print(f"{key} -< 'key', {BUCKET} - 'bucket', {s3} - 's3'")
+      s3.upload_fileobj(photo_file, BUCKET, key)
+      url=f"{S3_BASE_URL}{BUCKET}/{key}"
+      Photo.objects.create(url=url, client_id=client_id)
+    except:
+      print('An error has occured uploading the file to S3')
+  return redirect('clientdetail', client_id=client_id)
+
+
+### 
+
+def clientdetail(request, client_id):
+  print('client detail hit')
+  client = Client.objects.get(id=client_id)
+  return render(request, 'client/clientprofile.html', {
+    'client': client, 
+  })
+
+
+# THIS PULLS ALL THE EFFIN CLIENTS
+
+def allclients(request):
+  clients = Client.objects.all()
+  return render(request, 'client/show.html', {'clients': clients})
  
 ####        PROVIDER VIEWS 
 
@@ -148,3 +189,28 @@ def providersignup(request):
   form = ProviderSignupForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/providersignup.html', context) 
+
+def add_photo_provider(request, provider_id):
+  photo_file = request.FILES.get('photo-file', None)
+  if photo_file:
+    s3 = boto3.client('s3')
+    key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+    try:
+      # print(f"{key} -< 'key', {BUCKET} - 'bucket', {s3} - 's3'")
+      s3.upload_fileobj(photo_file, BUCKET, key)
+      url=f"{S3_BASE_URL}{BUCKET}/{key}"
+      Photo.objects.create(url=url, provider_id=provider_id)
+    except:
+      print('An error has occured uploading the file to S3')
+  return redirect('providerdetail', provider_id=provider_id)
+
+def providerdetail(request, provider_id):
+  provider = Provider.objects.get(id=provider_id)
+  print('hitting provider detail')
+  return render(request, 'provider/providerprofile.html', {
+    'provider': provider, 
+  })
+
+def allproviders(request):
+  providers = Provider.objects.all()
+  return render(request, 'provider/show.html', {'providers': providers})
