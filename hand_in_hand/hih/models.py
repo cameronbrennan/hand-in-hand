@@ -102,3 +102,10 @@ class Test(models.Model):
 
 class Test2(models.Model):
     pass
+
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True)
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return f"Photo @{self.url}"
