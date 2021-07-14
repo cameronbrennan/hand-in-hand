@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import ListView, DetailView
 from .models import Client, Provider, Assignment, Gad7FormResponse
-# from .forms import ClientSignupForm, ProviderSignupForm, Test
+from .forms import ClientSignupForm, ProviderSignupForm, Test
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin

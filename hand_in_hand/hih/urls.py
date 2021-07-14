@@ -22,7 +22,7 @@ urlpatterns = [
   path('providers/portal/', views.providerportal, name='providerportal'),
   path('prclients/', views.yourclients, name='clients'),
   path('prprofile/', views.providerprofile, name='providerprofile'),
-  path('accounts/providersignup/', views.providersignup, name='providersignup'),
+  #path('accounts/providersignup/', views.providersignup, name='providersignup'),
   path('registration/providerlogin/', views.providerlogin, name='providerlogin'),
   # path('assignments/gad7/', views.gad7, name='gad7'),
 ]
