@@ -1,8 +1,29 @@
 {% extends 'clientportalmain.html' %}
 {% block content %}
 <h1>Gad 7 Page</h1>
-    <form>
-    {% for question in model: %}
-        HELLO
+    <form action='/upload/gad7data/' method='post'>
+    {% csrf_token %}
+    {% for question in model.questions %}
+        {{ question }}
+        <br>
+        <label>
+            <input type="radio" name='gad7-choice-{{forloop.counter0}}' value="0" checked>
+            <span>Not at all</span>
+        </label>
+        <label>
+            <input type="radio" name='gad7-choice-{{forloop.counter0}}' value="1">
+            <span>Several days</span>
+        </label>
+        <label>
+            <input type="radio" name='gad7-choice-{{forloop.counter0}}' value="2">
+            <span>More than half the days</span>
+        </label>
+        <label>
+            <input type="radio" name='gad7-choice-{{forloop.counter0}}' value="3">
+            <span>Nearly every day </span>
+        </label>
+        <br>
+    {% endfor %}
+    <button type='submit'>Submit</button>
     </form>
 {% endblock %}
