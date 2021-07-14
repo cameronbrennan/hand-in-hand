@@ -1,5 +1,7 @@
 {% extends 'clientportalmain.html' %}
 {% block content %}
-<h1>your profile</h1>
+<h1>My Profile</h1>
+    {% for gad7_form in gad7_forms: %}
+        Question 1: {{ gad7_form.gad7_response_q1 }}
 
 {% endblock %}
