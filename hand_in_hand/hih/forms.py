@@ -5,13 +5,12 @@ from django.contrib.auth.models import User
 class ClientSignupForm(ModelForm):
   class Meta:
     model = Client
-    fields = ['first_name', 'last_name', 'email', 'password']
-    
+    fields = ['pronouns', 'phone', 'dob']
     
 class ProviderSignupForm(ModelForm):
   class Meta:
     model = Provider
-    fields = '__all__'
+    fields = ['pronouns', 'phone', 'licensure']
     
 class Test(ModelForm):
   class Meta:

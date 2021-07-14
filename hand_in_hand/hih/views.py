@@ -8,6 +8,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
 def signup(request):
+  error_message = ''
   if request.method == "POST":
     form = UserCreationForm(request.POST)
     if form.is_valid():
@@ -19,6 +20,7 @@ def signup(request):
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+# ---- ^^^ User Creation and signup functional (no anchor)^^^ ---- #
 
 # Create your views here.
 def home(request):
@@ -29,26 +31,6 @@ def yourforms(request):
 
 def successfullogin(request):
   return render(request, 'successfullogin.html')
- 
-# def signup(request):
-#   error_message = ''
-#   if request.method == 'POST':
-#     # This is how to create a 'user' form object
-#     # that includes the data from the browser
-#     form = UserCreationForm(request.POST)
-#     if form.is_valid():
-#       # This will add the user to the database
-#       user = form.save()
-#       # This is how we log a user in via code
-#       login(request, user)
-#       return redirect('home')
-#     else:
-#       error_message = 'Error with sign up - try again'
-#   # A bad POST or a GET request, so render signup.html with an empty form
-#   form = UserCreationForm()
-#   context = {'form': form, 'error_message': error_message}
-#   return render(request, 'registration/signup.html', context)
-
 
 def login_view(request):
    return render(request, 'login_view.html')
@@ -98,14 +80,12 @@ def clientportal(request):
 def clientsignup(request):
   error_message = ''
   if request.method == 'POST':
-    # This is how to create a 'user' form object
+    # This is how to create a 'client' form object
     # that includes the data from the browser
     form = ClientSignupForm(request.POST)
     if form.is_valid():
-      # This will add the user to the database
-      user = form.save()
-      # This is how we log a user in via code
-      login(request, user)
+      form.user_id = request.user_id
+      form.save()
       return redirect('clientprofile')
     else:
       error_message = 'Error with sign up - try again'

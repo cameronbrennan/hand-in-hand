@@ -17,29 +17,20 @@ from django.contrib.auth.models import User
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
-    password = models.CharField(max_length=24)
     pronouns = models.CharField(max_length=50)
     phone = models.CharField(max_length=100)
-    age = models.IntegerField() # switch to date field
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    dob = models.DateField()
     # location = models.IntegerField() #zipcode? can change to str later
     def __str__(self):
-        return self.first_name
+        return self.name
 
 class Provider(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
-    password = models.CharField(max_length=24)
     pronouns = models.CharField(max_length=50)
     phone = models.CharField(max_length=100)
     licensure = models.CharField(max_length=100)
     def __str__(self):
-        return self.first_name
+        return self.name
     
 class Assignment(models.Model):
     date = models.DateField('date assigned')
