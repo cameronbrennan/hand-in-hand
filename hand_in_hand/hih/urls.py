@@ -9,6 +9,7 @@ urlpatterns = [
   path('accounts/login/', views.login, name='login'),
   path('login',views.login_view, name = 'login '),
   
+  
   #### CLIENT URLS
   path('clients/portal/', views.clientportal, name='clientportal'),
   path('clprofile/', views.clientprofile, name='clientprofile'),
@@ -19,6 +20,7 @@ urlpatterns = [
   path('clients/all', views.allclients, name='allclients'),
   path('clients/<int:client_id>/', views.clientdetail, name='clientdetail'),
   path('clients/<int:client_id>/add_photo_client/', views.add_photo_client, name='add_photo_client'),
+  path('upload/gad7data/', views.uploadgad7, name='uploadgad7'),
   
   ##### PROVIDER URLS
   path('providers/portal/', views.providerportal, name='providerportal'),

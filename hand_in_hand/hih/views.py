@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import ClientSignupForm, ProviderSignupForm, Test
-from .models import Assignment, Client, Provider, Photo
+from .models import Assignment, Client, Provider, Photo, Gad7FormResponse
 
 #### AWS PHOTO STUFF HERE
 import boto3
