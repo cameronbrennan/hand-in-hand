@@ -9,12 +9,9 @@ from .models import Assignment, Client, Provider, Photo, Gad7FormResponse
 import boto3
 import uuid
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
-BUCKET = 'catcollector12'
-
 
 
 # Create your views here.
-
 
 
 def home(request):
@@ -76,11 +73,43 @@ def allclients(request):
   clients = Client.objects.all()
   return render(request, 'client/show.html', {'clients': clients})
 
+
+####        CLIENT VIEWS
+
 def clientlogin(request):
   return render(request, 'registration/clientlogin.html') 
           
-def clientprofile(request):
-  return render(request, 'client/clientprofile.html')
+def clientprofile(request):  
+  gad7_form_responses = [
+    {
+      'gad7_response_q1': 1, 
+      'gad7_response_q2': 2, 
+      'gad7_response_q3': 3,
+      'gad7_response_q4': 3,
+      'gad7_response_q5': 3,
+      'gad7_response_q6': 3,
+      'gad7_response_q7': 3
+    },
+    {
+      'gad7_response_q1': 1, 
+      'gad7_response_q2': 2, 
+      'gad7_response_q3': 3,
+      'gad7_response_q4': 3,
+      'gad7_response_q5': 3,
+      'gad7_response_q6': 3,
+      'gad7_response_q7': 3
+    },
+    {
+      'gad7_response_q1': 1, 
+      'gad7_response_q2': 2, 
+      'gad7_response_q3': 3,
+      'gad7_response_q4': 3,
+      'gad7_response_q5': 3,
+      'gad7_response_q6': 3,
+      'gad7_response_q7': 3
+    },
+  ]
+  return render(request, 'client/clientprofile.html', { 'gad7_form_responses' : gad7_form_responses })
 
 def yourproviders(request):
   return render(request, 'client/yourproviders.html')
@@ -107,10 +136,23 @@ def clientsignup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/clientsignup.html', context)
 
-# Complete gad7 view function
 def gad7(request):
   model = Assignment.Gad7
-  return render(request, 'client/gad7.html', model)
+  return render(request, 'client/gad7.html', { 'model': model })
+
+def uploadgad7(request):
+  # UPDATE THIS TO ARRAY FIELD
+  g = Gad7FormResponse(
+    gad7_response_q1=request.POST.get('gad7-choice-0'), 
+    gad7_response_q2=request.POST.get('gad7-choice-1'), 
+    gad7_response_q3=request.POST.get('gad7-choice-2'), 
+    gad7_response_q4=request.POST.get('gad7-choice-3'), 
+    gad7_response_q5=request.POST.get('gad7-choice-4'),
+    gad7_response_q6=request.POST.get('gad7-choice-5'), 
+    gad7_response_q7=request.POST.get('gad7-choice-6')
+  )
+  g.save()
+  return redirect('clientprofile')
  
 ####        PROVIDER VIEWS 
 
