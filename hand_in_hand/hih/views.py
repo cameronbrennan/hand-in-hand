@@ -42,7 +42,36 @@ def clientlogin(request):
   return render(request, 'registration/clientlogin.html') 
           
 def clientprofile(request):  
-  return render(request, 'client/clientprofile.html')
+  gad7_form_responses = [
+    {
+      'gad7_response_q1': 1, 
+      'gad7_response_q2': 2, 
+      'gad7_response_q3': 3,
+      'gad7_response_q4': 3,
+      'gad7_response_q5': 3,
+      'gad7_response_q6': 3,
+      'gad7_response_q7': 3
+    },
+    {
+      'gad7_response_q1': 1, 
+      'gad7_response_q2': 2, 
+      'gad7_response_q3': 3,
+      'gad7_response_q4': 3,
+      'gad7_response_q5': 3,
+      'gad7_response_q6': 3,
+      'gad7_response_q7': 3
+    },
+    {
+      'gad7_response_q1': 1, 
+      'gad7_response_q2': 2, 
+      'gad7_response_q3': 3,
+      'gad7_response_q4': 3,
+      'gad7_response_q5': 3,
+      'gad7_response_q6': 3,
+      'gad7_response_q7': 3
+    },
+  ]
+  return render(request, 'client/clientprofile.html', { 'gad7_form_responses' : gad7_form_responses })
 
 def yourproviders(request):
   return render(request, 'client/yourproviders.html')
@@ -74,7 +103,7 @@ def gad7(request):
   return render(request, 'client/gad7.html', { 'model': model })
 
 def uploadgad7(request):
-  # print(request.POST.get('gad7-choice-0'))
+  # UPDATE THIS TO ARRAY FIELD
   g = Gad7FormResponse(
     gad7_response_q1=request.POST.get('gad7-choice-0'), 
     gad7_response_q2=request.POST.get('gad7-choice-1'), 
