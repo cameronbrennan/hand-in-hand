@@ -1,5 +1,25 @@
 {% extends 'clientportalmain.html' %}
 {% block content %}
-<h1>your profile</h1>
+<h1>My Profile</h1>
+    {% for gad7_form_response in gad7_form_responses %}
+        <h2>Form Response {{forloop.counter}}</h2>
+        <label>
+            <input type="radio" name='gad7-choice-{{forloop.counter0}}' value="0" disabled>
+            <span>Not at all</span>
+        </label>
+        <label>
+            <input type="radio" name='gad7-choice-{{forloop.counter0}}' value="1" disabled>
+            <span>Several days</span>
+        </label>
+        <label>
+            <input type="radio" name='gad7-choice-{{forloop.counter0}}' value="2" disabled>
+            <span>More than half the days</span>
+        </label>
+        <label>
+            <input type="radio" name='gad7-choice-{{forloop.counter0}}' value="3" disabled>
+            <span>Nearly every day</span>
+        </label>
+        {{ gad7_form_response }}
+    {% endfor %}
 
 {% endblock %}
