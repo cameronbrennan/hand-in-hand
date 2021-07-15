@@ -1,5 +1,6 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -39,6 +40,7 @@ def select_profile(request):
 
 class ClientCreate(LoginRequiredMixin, CreateView):
   model = Client
+  user = User
   fields = ['name', 'pronouns', 'email', 'age']
   def form_valid(self, form):
     form.instance.user = self.request.user
