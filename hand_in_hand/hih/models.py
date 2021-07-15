@@ -9,7 +9,7 @@ class Client(models.Model):
     name = models.CharField(max_length=200, null=True,)
     pronouns = models.CharField(max_length=200, null=True,)
     email = models.CharField(max_length=200, null=True,)
-    dob = models.DateField(auto_now=True, null=True,)
+    age = models.IntegerField()
 
     def __str__(self):
         return self.name

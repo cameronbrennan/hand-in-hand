@@ -1,0 +1,10 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<h1>Welcome!</h1>
+<br><br>
+<h2>Are you Signing-up As A:</h2>
+<a href="{% url 'client_create' %}" class='btn' id='home-btn'>Client</a>
+<a href="{% url 'providersignup' %}" class='btn' id='home-btn'>Provider</a>
+
+{% endblock %}

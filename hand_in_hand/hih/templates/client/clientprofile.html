@@ -2,7 +2,7 @@
 {% block content %}
 <h1>My Profile</h1>
 
-{% for photo in client.photo_set.all %}
+{% comment %} {% for photo in client.photo_set.all %}
       <img class="responsive-img card-panel" src="{{photo.url}}">
       {% empty %}
         <div class="card-panel teal-text center-align">No Photos Uploaded</div>
@@ -13,9 +13,23 @@
         <input type="file" name="photo-file">
         <br>
         <input type="submit" class='btn' value='Upload Photo'>
-      </form>
+      </form> {% endcomment %}
 
     {% for gad7_form_response in gad7_form_responses %}
+        <a href=''>
+        <div class="card">
+            <div class="card-content">
+                <p>GAD-7 Form Response {{ forloop.counter }}</p>
+                <p>Date Completed: {{ gad7_completion_date }}</p>
+                {% comment %} <p>Score: {{ gad7_score }}<p> {% endcomment %}
+            </div>
+        </div>
+        </a>
+
+        <div class='card'>
+            <div class='card-content'>
+                <p>
+        </div>
         <h2>Form Response {{forloop.counter}}</h2>
         <label>
             <input type="radio" name='gad7-choice-{{forloop.counter0}}' value="0" disabled>
