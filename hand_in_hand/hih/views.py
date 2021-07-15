@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import ClientSignupForm, ProviderSignupForm, Test
 from .models import Assignment, Gad7FormResponse, Client, Provider, Photo
+from datetime import date
 
 #### AWS PHOTO STUFF HERE
 import boto3
@@ -53,30 +54,21 @@ def clientprofile(request):
   gad7_form_responses = [
     {
       'gad7_response_q1': 1, 
-      'gad7_response_q2': 2, 
-      'gad7_response_q3': 3,
-      'gad7_response_q4': 3,
-      'gad7_response_q5': 3,
-      'gad7_response_q6': 3,
-      'gad7_response_q7': 3
+      'gad7_response_q2': 1, 
+      'gad7_response_q3': 1,
+      'gad7_response_q4': 1,
+      'gad7_response_q5': 1,
+      'gad7_response_q6': 1,
+      'gad7_response_q7': 1
     },
     {
-      'gad7_response_q1': 1, 
+      'gad7_response_q1': 2, 
       'gad7_response_q2': 2, 
-      'gad7_response_q3': 3,
-      'gad7_response_q4': 3,
-      'gad7_response_q5': 3,
-      'gad7_response_q6': 3,
-      'gad7_response_q7': 3
-    },
-    {
-      'gad7_response_q1': 1, 
-      'gad7_response_q2': 2, 
-      'gad7_response_q3': 3,
-      'gad7_response_q4': 3,
-      'gad7_response_q5': 3,
-      'gad7_response_q6': 3,
-      'gad7_response_q7': 3
+      'gad7_response_q3': 2,
+      'gad7_response_q4': 2,
+      'gad7_response_q5': 2,
+      'gad7_response_q6': 2,
+      'gad7_response_q7': 2
     },
   ]
   return render(request, 'client/clientprofile.html', { 'gad7_form_responses' : gad7_form_responses })
@@ -110,7 +102,7 @@ def gad7(request):
   model = Assignment.Gad7
   return render(request, 'client/gad7.html', { 'model': model })
 
-def uploadgad7(request):
+def uploadgad7(request, client_id):
   # UPDATE THIS TO ARRAY FIELD
   g = Gad7FormResponse(
     gad7_response_q1=request.POST.get('gad7-choice-0'), 
@@ -119,11 +111,27 @@ def uploadgad7(request):
     gad7_response_q4=request.POST.get('gad7-choice-3'), 
     gad7_response_q5=request.POST.get('gad7-choice-4'),
     gad7_response_q6=request.POST.get('gad7-choice-5'), 
-    gad7_response_q7=request.POST.get('gad7-choice-6')
+    gad7_response_q7=request.POST.get('gad7-choice-6'),
+    gad7_completion_date=date.today(),
+    # gad7_score=gad7_response_q1+gad7_response_q2+gad7_response_q3+gad7_response_q4+gad7_response_q5+gad7_response_q6+gad7_response_q7
   )
+  # WHERE DO WE LINK THIS TO A SPECIFIC CLIENT? IN HERE OR IN MODELS.PY?
+  # 
+  # g.client_id = client_id
   g.save()
-  print('upload gad7 hit')
   return redirect('home')
+
+def read_user_gad7_forms(request):
+  gad7_forms = Gad7FormResponse.objects.all()
+  return render(request, 'client/forms', {'gad7_forms': gad7_forms})
+
+# def viewgad7(request):
+#   Needs to be completed when we have 
+#   user_gad7 = Gad7FormResponse.get(id='')
+#   return render(request, 'client/viewgad7.html', {'user_gad7': user_gad7})
+
+# def deletegad7(request):
+#   pass
 
 def add_photo_client(request, client_id):
   photo_file = request.FILES.get('photo-file', None)
@@ -149,9 +157,6 @@ def clientdetail(request, client_id):
   return render(request, 'client/clientprofile.html', {
     'client': client, 
   })
-
-
-# THIS PULLS ALL THE EFFIN CLIENTS
 
 def allclients(request):
   clients = Client.objects.all()

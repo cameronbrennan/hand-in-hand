@@ -71,8 +71,13 @@ class Gad7FormResponse(models.Model):
     gad7_response_q6 = models.IntegerField()
     gad7_response_q7 = models.IntegerField()
 
-    def compute_score(self):
-        return self.gad7_q1_response + self.gad7_q2_response + self.gad7_q3_response + self.gad7_q4_response + self.gad7_q5_response + self.gad7_q6_response + self.gad7_q7_response
+    gad7_completion_date = models.DateTimeField()
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+
+    # def compute_score(self):
+    #     return self.gad7_response_q1 + self.gad7_response_q2 + self.gad7_response_q3 + self.gad7_response_q4 + self.gad7_response_q5 + self.gad7_response_q6 + self.gad7_response_q7
+
+    # gad7_score = compute_score()
 
 class Photo(models.Model):
     url = models.CharField(max_length=200)

@@ -2,7 +2,46 @@
 {% block content %}
 <h1>My Profile</h1>
 
-{% for photo in client.photo_set.all %}
+<div class="row">
+    <div class="col s6">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">{{ client.name }}</span>
+          <p>First Name: {{ client.firstname }}</p>
+          <p>Last Name: {{ client.lastname }}</p>
+          <p>Email: {{ client.email }}</p>
+          <p>Age: {{ client.age }}</p>
+          <p>Location: {{ client.location }}</p>
+        </div>
+        <div class="card-action">
+        </div>
+      </div>
+    
+      <img class="responsive-img card-panel" src="{{client.photo_set.last.url}}">
+        
+      {% if client.photo_set.first %}
+      <form action="{% url 'add_photo_client' client.id %}" method='POST' enctype="multipart/form-data" class='card-panel'>
+        {% csrf_token %}
+        <input type="file" name="photo-file">
+        <br><br>
+        <input type="submit" class='btn' value='Change Photo'>
+      </form>
+      {% else %}
+      <form action="{% url 'add_photo_client' client.id %}" method='POST' enctype="multipart/form-data" class='card-panel'>
+        {% csrf_token %}
+        <input type="file" name="photo-file">
+        <br>
+        <input type="submit" class='btn' value='Upload Photo'>
+      </form>
+      {% endif %}
+
+
+      </div>
+      </div>
+
+{% endblock %}
+
+{% comment %} {% for photo in client.photo_set.all %}
       <img class="responsive-img card-panel" src="{{photo.url}}">
       {% empty %}
         <div class="card-panel teal-text center-align">No Photos Uploaded</div>
@@ -16,6 +55,20 @@
       </form>
 
     {% for gad7_form_response in gad7_form_responses %}
+        <a href=''>
+        <div class="card">
+            <div class="card-content">
+                <p>GAD-7 Form Response {{ forloop.counter }}</p>
+                <p>Date Completed: {{ gad7_completion_date }}</p>
+                <p>Score: {{ gad7_score }}<p>
+            </div>
+        </div>
+        </a>
+
+        <div class='card'>
+            <div class='card-content'>
+                <p>
+        </div>
         <h2>Form Response {{forloop.counter}}</h2>
         <label>
             <input type="radio" name='gad7-choice-{{forloop.counter0}}' value="0" disabled>
@@ -36,4 +89,4 @@
         {{ gad7_form_response }}
     {% endfor %}
 
-{% endblock %}
+{% endblock %} {% endcomment %}
