@@ -1,12 +1,12 @@
 # --- App Imports --- #
 from .forms import UserSignup
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .models import Assignment, Gad7FormResponse, Client, Provider, Photo
+from datetime import date
 
 # --- AWS3 Photo Imports --- #
 import boto3
@@ -26,6 +26,7 @@ def signup(request):
       return redirect('select_profile')
     else:
       error_message = 'Error with sign up - try again'
+      print(error_message)
   form = UserSignup()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
@@ -52,9 +53,52 @@ def client_portal(request):
 @login_required
 def client_detail(request, client_id):
   client = Client.objects.get(id=client_id)
-  return render(request, 'client/client_detail.html', { 'client':client })
+  return render(request, 'client/client_detail.html', {'client': client})
+
+def clientprofile(request):
+  return render(request, 'client/clientprofile.html', { 'gad7_form_responses' : gad7_form_responses })
+
+# ----- GAD-7 (Sample Assessment) -----#
+
+# Complete gad7 view function
+def gad7(request):
+  model = Assignment.Gad7
+  return render(request, 'client/gad7.html', { 'model': model})
+
+def uploadgad7(request, client_id):
+  print(client_id)
+  client = Client.objects.get(id=client_id)
+  g = Gad7FormResponse(
+    gad7_response_q1=request.POST.get('gad7-choice-0'), 
+    gad7_response_q2=request.POST.get('gad7-choice-1'), 
+    gad7_response_q3=request.POST.get('gad7-choice-2'), 
+    gad7_response_q4=request.POST.get('gad7-choice-3'), 
+    gad7_response_q5=request.POST.get('gad7-choice-4'),
+    gad7_response_q6=request.POST.get('gad7-choice-5'), 
+    gad7_response_q7=request.POST.get('gad7-choice-6'),
+    gad7_completion_date=date.today(),
+  )
+  g.client = client
+  print(g.client)
+  g.save()
+  return redirect('home')
+
+# READ and DELETE CRUD operations for the Gad7 data entity ------------------
+
+def viewgad7(request):
+  pass
+
+def deletegad7(request):
+  pass
+
+# ----- Client AWS Integration ----- #
+
+def allclients(request):
+  clients = Client.objects.all()
+  return render(request, 'client/show.html', {'clients': clients})
 
 # - Client AWS Integration - #
+
 @login_required
 def add_photo_client(request, client_id):
   photo_file = request.FILES.get('photo-file', None)
@@ -78,17 +122,22 @@ class ProviderCreate(LoginRequiredMixin, CreateView):
     form.instance.user = self.request.user
     return super().form_valid(form)
 
-@login_required
+@login_required    
 def provider_portal(request):
   return render(request, 'provider/portal.html')
 
-@login_required
+@login_required    
 def provider_detail(request, provider_id):
   provider = Provider.objects.get(id=provider_id)
-  return render(request, 'provider/provider_detail.html', { 'provider':provider })
+  return render(request, 'provider/provider_detail.html', { 'provider': provider })
+
+def allproviders(request):
+  providers = Provider.objects.all()
+  return render(request, 'provider/show.html', {'providers': providers})
 
 # - Provider AWS Integration - #
-@login_required
+
+@login_required    
 def add_photo_provider(request, provider_id):
   photo_file = request.FILES.get('photo-file', None)
   if photo_file:
@@ -100,24 +149,4 @@ def add_photo_provider(request, provider_id):
       Photo.objects.create(url=url, provider_id=provider_id)
     except:
       print('An error has occured uploading the file to S3')
-  return redirect('provider_detail', provider_id=provider_id)
-
-# --- GAD-7 (Sample Assessment) --- #
-def uploadgad7(request):
-  # UPDATE THIS TO ARRAY FIELD
-  g = Gad7FormResponse(
-    gad7_response_q1=request.POST.get('gad7-choice-0'), 
-    gad7_response_q2=request.POST.get('gad7-choice-1'), 
-    gad7_response_q3=request.POST.get('gad7-choice-2'), 
-    gad7_response_q4=request.POST.get('gad7-choice-3'), 
-    gad7_response_q5=request.POST.get('gad7-choice-4'),
-    gad7_response_q6=request.POST.get('gad7-choice-5'), 
-    gad7_response_q7=request.POST.get('gad7-choice-6')
-  )
-  g.save()
-  return redirect('home')
-
-# --- View Completed GAD-7 --- #
-def gad7(request):
-  model = Assignment.Gad7
-  return render(request, 'client/gad7.html', { 'model': model })
+  return redirect('providerdetail', provider_id=provider_id)

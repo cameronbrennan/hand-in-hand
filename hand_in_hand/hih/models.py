@@ -63,6 +63,9 @@ class Gad7FormResponse(models.Model):
     gad7_response_q6 = models.IntegerField()
     gad7_response_q7 = models.IntegerField()
 
+    gad7_completion_date = models.DateTimeField()
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+
 class Photo(models.Model):
     url = models.CharField(max_length=200)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True)

@@ -1,0 +1,13 @@
+{% extends 'clientportalmain.html' %}
+{% block content %}
+{% for client in clients %}
+  <a href="{% url 'client_detail' client.id %}">
+    <div class="card">
+        <div class="card-content">
+            <p>Age: {{ client.age }}</p>
+            <p>Email: {{ client.email }}</p>
+        </div>
+    </div>
+  </a>
+{% endfor %}
+{% endblock %}

@@ -22,7 +22,7 @@
                     <li>About</li>
                     {% if user.is_authenticated %}
                         {% if user.client %}
-		                    <li><a href="{% url 'client_portal' %}">Client Portal</a></li>
+                            <li><a href="{% url 'client_portal' %}">Client Portal</a></li>
                         {% else %}
                             <li><a href="{% url 'provider_portal' %}">Provider Portal</a></li>
                         {% endif %}
@@ -39,7 +39,7 @@
         {% block content %}
         {% endblock %}
     </main>
-  	<footer class="page-footer">
+      <footer class="page-footer">
        <div class="right">All Rights Reserved, &copy; 2021 Hand in Hand &nbsp;</div>
     </footer>
 </body>

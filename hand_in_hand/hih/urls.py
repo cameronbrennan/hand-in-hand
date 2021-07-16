@@ -17,7 +17,11 @@ urlpatterns = [
   path('provider/portal/', views.provider_portal, name='provider_portal'),
   path('provider/<int:provider_id>/', views.provider_detail, name='provider_detail'),
   path('provider/<int:provider_id>/add_photo_provider/', views.add_photo_provider, name='add_photo_provider'),
-
+  
   # --- GAD-7 URLS --- #
   path('client/gad7/', views.gad7, name='gad7'),
+  path('upload/gad7data/<int:client_id>/', views.uploadgad7, name='uploadgad7'),
+  # READ and DELETE CRUD paths for the Gad7 data entities
+  # path('', views.viewgad7, name='viewgad7'),
+  # path('', views.deletegad7, name='deletegad7'),
 ]
