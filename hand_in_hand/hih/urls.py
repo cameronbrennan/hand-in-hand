@@ -5,6 +5,7 @@ urlpatterns = [
   path('', views.home, name='home'), # good
   path('accounts/signup/', views.signup, name='signup'), # good
   path('select_profile/', views.select_profile, name='select_profile'), # good
+  path('about', views.about, name='about'),
   
   # --- CLIENT URLS --- #
   path('client/create/', views.ClientCreate.as_view(), name='client_create'),

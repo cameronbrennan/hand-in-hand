@@ -1,7 +1,7 @@
 {% extends 'clientportalmain.html' %}
 {% block content %}
 
-<h1>Gad 7 Page</h1>
+<h1>Complete your GAD-7 assessment</h1>
     <form action="{% url 'uploadgad7' request.user.client.id %}" method='post'>
     {% csrf_token %}
     {% for question in model.questions %}

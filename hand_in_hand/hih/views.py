@@ -1,4 +1,5 @@
 # --- App Imports --- #
+from botocore.hooks import _FIRST
 from .forms import UserSignup
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
@@ -35,6 +36,9 @@ def signup(request):
 def home(request):
   return render(request, 'home.html')
 
+def about(request):
+  return render(request, 'about.html')
+
 def select_profile(request):
   return render(request, 'select_profile.html')
 
@@ -53,18 +57,24 @@ def client_portal(request):
 @login_required
 def client_detail(request, client_id):
   client = Client.objects.get(id=client_id)
+  gad7s = client.Gad7FormResponse.get()
+  print(gad7s)
   return render(request, 'client/client_detail.html', {'client': client})
 
-def clientprofile(request):
+def clientprofile(request, client_id):
+  client = Client.objects.get(id=client_id)
+  print(client)
   return render(request, 'client/clientprofile.html', { 'gad7_form_responses' : gad7_form_responses })
 
 # ----- GAD-7 (Sample Assessment) -----#
 
 # Complete gad7 view function
+@login_required
 def gad7(request):
   model = Assignment.Gad7
   return render(request, 'client/gad7.html', { 'model': model})
 
+@login_required
 def uploadgad7(request, client_id):
   print(client_id)
   client = Client.objects.get(id=client_id)
