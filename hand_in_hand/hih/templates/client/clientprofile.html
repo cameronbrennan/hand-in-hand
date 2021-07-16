@@ -1,5 +1,6 @@
 {% extends 'clientportalmain.html' %}
 {% block content %}
+
 <h1>My Profile</h1>
 
 {% comment %} {% for photo in client.photo_set.all %}
@@ -49,5 +50,6 @@
         </label>
         {{ gad7_form_response }}
     {% endfor %}
+
 
 {% endblock %}

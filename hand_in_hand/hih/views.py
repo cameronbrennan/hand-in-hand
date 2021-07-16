@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .models import Assignment, Gad7FormResponse, Client, Provider, Photo
 
+
 #### AWS PHOTO STUFF HERE
 import boto3
 from boto3 import client
@@ -74,6 +75,7 @@ def clientportal(request):
 
 # ----- GAD-7 (Sample Assessment) -----#
 
+# Complete gad7 view function
 def gad7(request):
   model = Assignment.Gad7
   return render(request, 'client/gad7.html', { 'model': model })
