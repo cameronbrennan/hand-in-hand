@@ -8,19 +8,20 @@ urlpatterns = [
   
   # --- CLIENT URLS --- #
   path('client/create/', views.ClientCreate.as_view(), name='client_create'),
-  path('client/portal/', views.clientportal, name='clientportal'),
-  path('clprofile/', views.clientprofile, name='clientprofile'),
+  path('client/portal/', views.clientportal, name='client_portal'),
+  path('clprofile/', views.clientprofile, name='client_profile'),
 
   # --- PROVIDER URLS --- #
-  path('provider/create/', views.providersignup, name='provider_create'),
-  path('provider/portal/', views.providerportal, name='providerportal'),
+  path('provider/create/', views.ProviderCreate, name='provider_create'),
+  path('provider/portal/', views.providerportal, name='provider_portal'),
   path('prprofile/', views.providerprofile, name='providerprofile'),
   
   # --- GAD-7 URLS --- #
   path('assignments/gad7/', views.gad7, name='gad7'),
   path('upload/gad7data/', views.uploadgad7, name='uploadgad7'),
-
-  # --- INCOMPELTE PATHS --- #
+  # READ and DELETE CRUD paths for the Gad7 data entities
+  path('', views.viewgad7, name='viewgad7'),
+  path('', views.deletegad7, name='deletegad7'),
 
   # LOOK AT THIS FOR DISPLAYING ALL CLIENTS
   path('client/all', views.allclients, name='allclients'),

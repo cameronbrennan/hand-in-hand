@@ -1,7 +1,7 @@
 # --- App Imports --- #
 from .forms import UserSignup
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
@@ -84,14 +84,14 @@ def clientportal(request):
 # ----- GAD-7 (Sample Assessment) -----#
 
 # Complete gad7 view function
-def gad7(request):
+def gad7(request, client_id):
+  client = Client.objects.get(id=client_id)
   model = Assignment.Gad7
-  return render(request, 'client/gad7.html', { 'model': model })
+  return render(request, 'client/gad7.html', { 'model': model, 'client': client })
 
-# Test if this should take in client_id OR User.client_id
-
-# client.user_id
 def uploadgad7(request, client_id):
+  client = Client.objects.get(id=client_id)
+  print(client)
   g = Gad7FormResponse(
     gad7_response_q1=request.POST.get('gad7-choice-0'), 
     gad7_response_q2=request.POST.get('gad7-choice-1'), 
@@ -101,16 +101,19 @@ def uploadgad7(request, client_id):
     gad7_response_q6=request.POST.get('gad7-choice-5'), 
     gad7_response_q7=request.POST.get('gad7-choice-6'),
     gad7_completion_date=date.today(),
-    # gad7_score=gad7_response_q1+gad7_response_q2+gad7_response_q3+gad7_response_q4+gad7_response_q5+gad7_response_q6+gad7_response_q7
   )
-  g.client = client_id
-  # test out if client_id is being written to db
-  # print(g.client_id)
-  # OR
-  # print(g.client_id)
-  print(g.client_id)
+  g.client = client
+  print(g.client)
   g.save()
   return redirect('home')
+
+# READ and DELETE CRUD operations for the Gad7 data entity ------------------
+
+def viewgad7(request):
+  pass
+
+def deletegad7(request):
+  pass
 
 # ----- Client AWS Integration ----- #
 
