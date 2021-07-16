@@ -1,9 +1,7 @@
 # --- App Imports --- #
 from .forms import UserSignup
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, reverse
-from django.views.generic.edit import CreateView, UpdateView
-from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -48,34 +46,16 @@ class ClientCreate(LoginRequiredMixin, CreateView):
     form.instance.user = self.request.user
     return super().form_valid(form)
 
-def clientportal(request):
+@login_required
+def client_portal(request):
   return render(request, 'client/portal.html')
 
-def clientdetail(request, client_id):
+@login_required
+def client_detail(request, client_id):
   client = Client.objects.get(id=client_id)
-  return render(request, 'client/client_profile.html', {'client': client_id})
+  return render(request, 'client/client_detail.html', {'client': client})
 
-def clientprofile(request): 
-  gad7_form_responses = [
-    {
-      'gad7_response_q1': 1, 
-      'gad7_response_q2': 2, 
-      'gad7_response_q3': 3,
-      'gad7_response_q4': 3,
-      'gad7_response_q5': 3,
-      'gad7_response_q6': 3,
-      'gad7_response_q7': 3
-    },
-    {
-      'gad7_response_q1': 2, 
-      'gad7_response_q2': 2, 
-      'gad7_response_q3': 2,
-      'gad7_response_q4': 2,
-      'gad7_response_q5': 2,
-      'gad7_response_q6': 2,
-      'gad7_response_q7': 2
-    },
-  ]
+def clientprofile(request):
   return render(request, 'client/clientprofile.html', { 'gad7_form_responses' : gad7_form_responses })
 
 # ----- GAD-7 (Sample Assessment) -----#
@@ -116,7 +96,10 @@ def deletegad7(request):
 def allclients(request):
   clients = Client.objects.all()
   return render(request, 'client/show.html', {'clients': clients})
+
 # - Client AWS Integration - #
+
+@login_required
 def add_photo_client(request, client_id):
   photo_file = request.FILES.get('photo-file', None)
   print(request.FILES.get('photo-file'))
@@ -130,7 +113,7 @@ def add_photo_client(request, client_id):
       Photo.objects.create(url=url, client_id=client_id)
     except:
       print('An error has occured uploading the file to S3')
-  return redirect('clientdetail', client_id=client_id)
+  return redirect('client_detail', client_id=client_id)
 
 # --- Provider Specific Views --- #
 class ProviderCreate(LoginRequiredMixin, CreateView):
@@ -139,24 +122,23 @@ class ProviderCreate(LoginRequiredMixin, CreateView):
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
-    
-def providerportal(request):
+
+@login_required    
+def provider_portal(request):
   return render(request, 'provider/portal.html')
 
-def providerprofile(request):
-  return render(request, 'provider/providerprofile.html')
-
-def providerdetail(request, provider_id):
+@login_required    
+def provider_detail(request, provider_id):
   provider = Provider.objects.get(id=provider_id)
-  print('hitting provider detail')
-  return render(request, 'provider/providerprofile.html', {
-    'provider': provider, 
-  })
+  return render(request, 'provider/provider_detail.html', { 'provider': provider })
 
 def allproviders(request):
   providers = Provider.objects.all()
   return render(request, 'provider/show.html', {'providers': providers})
+
 # - Provider AWS Integration - #
+
+@login_required    
 def add_photo_provider(request, provider_id):
   photo_file = request.FILES.get('photo-file', None)
   if photo_file:
