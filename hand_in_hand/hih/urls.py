@@ -14,8 +14,6 @@ urlpatterns = [
   path('provider/create/', views.providersignup, name='provider_create'),
   path('provider/portal/', views.providerportal, name='providerportal'),
   
-  
-  
   # --- GAD-7 URLS --- #
   path('assignments/gad7/', views.gad7, name='gad7'),
   path('upload/gad7data/', views.uploadgad7, name='uploadgad7'),
@@ -24,10 +22,6 @@ urlpatterns = [
   path('clprofile/', views.clientprofile, name='clientprofile'),
   path('prprofile/', views.providerprofile, name='providerprofile'),
 
-
-
-
-  
   # LOOK AT THIS FOR DISPLAYING ALL CLIENTS
   path('client/all', views.allclients, name='allclients'),
   path('client/<int:client_id>/', views.clientdetail, name='clientdetail'),

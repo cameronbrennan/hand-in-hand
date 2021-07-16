@@ -1,35 +1,29 @@
 from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
+from django.db.models.deletion import CASCADE
 
 # Create your models here.
 class Client(models.Model):
-    firstname = models.CharField(max_length=100)
-    lastname = models.CharField(max_length=100)
-    pronouns = models.CharField(max_length=50)
-    email = models.CharField(max_length=150)
-    phone = models.CharField(max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True,)
+    name = models.CharField(max_length=200, null=True,)
+    pronouns = models.CharField(max_length=200, null=True,)
+    email = models.CharField(max_length=200, null=True,)
     age = models.IntegerField()
-    last_login = models.CharField(max_length=400)
-    location = models.IntegerField() #zipcode? can change to str later
-    # user = models.ForeignKey(User, on_delete=models.CASCADE) #add user type?
+
     def __str__(self):
-        return self.firstname
+        return self.name
     
 class Provider(models.Model):
-    firstname = models.CharField(max_length=100)
-    lastname = models.CharField(max_length=100)
-    pronouns = models.CharField(max_length=100)
-    email = models.CharField(max_length=150)
-    phone = models.CharField(max_length=100)
-    about = models.TextField(max_length=500)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True,)
+    name = models.CharField(max_length=200, null=True,)
+    pronouns = models.CharField(max_length=200, null=True,)
+    email = models.CharField(max_length=200, null=True,)
     certification = models.CharField(max_length=150)
-    certnum = models.CharField(max_length=100)
-    last_login = models.CharField(max_length=400)
-    location = models.IntegerField() #zipcode? can change to str later
-    # user = models.ForeignKey(User, on_delete=models.CASCADE) #add user type?
+    about = models.TextField(max_length=500)
+    
     def __str__(self):
-        return self.firstname
+        return self.name
     
 class Assignment(models.Model):
     date = models.DateField('date assigned')
@@ -45,7 +39,6 @@ class Assignment(models.Model):
             "How often have you been bothered by becoming easily annoyed or irritable over the past 2 weeks?",
             "How often have you been bothered by feeling afraid as if something awful might happen over the past 2 weeks?"
         ]
-        # could make this an array as well and link the score to the indices
         choices = {
             'Not at all': 0,
             'Several days': 1,
@@ -58,9 +51,6 @@ class Assignment(models.Model):
 
         def __str__(self):
             return self.assignment_name
-
-        # can use JS to grab the values selected from the DOM and add them together
-        # get the template set up so a user can see all the questions first, then figure out method for computing
 
 class Gad7FormResponse(models.Model):
     gad7_response_q1 = models.IntegerField()

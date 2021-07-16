@@ -1,9 +1,11 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from .forms import ClientSignupForm, ProviderSignupForm, Test
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from .models import Assignment, Gad7FormResponse, Client, Provider, Photo
-from datetime import date
 
 #### AWS PHOTO STUFF HERE
 import boto3
@@ -12,54 +14,54 @@ import uuid
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 BUCKET = 'catcollector12'
 
-# Create your views here.
-def home(request):
-  return render(request, 'home.html')
-
-def yourforms(request):
-  return render(request, 'yourforms.html')
-
-def successfullogin(request):
-  return render(request, 'successfullogin.html')
- 
+# User creation and signup -- redirects to Client/Provider creation and signup
 def signup(request):
-  error_message = ''
-  if request.method == 'POST':
-    # This is how to create a 'user' form object
-    # that includes the data from the browser
+  error_message=''
+  if request.method == "POST":
     form = UserCreationForm(request.POST)
     if form.is_valid():
-      # This will add the user to the database
       user = form.save()
-      # This is how we log a user in via code
       login(request, user)
-      return redirect('home')
+      return redirect('select_profile')
     else:
       error_message = 'Error with sign up - try again'
-  # A bad POST or a GET request, so render signup.html with an empty form
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
+# Create your views here.
+def home(request):
+  return render(request, 'home.html')
 
+def select_profile(request):
+  return render(request, 'select_profile.html')
+
+def yourforms(request):
+  return render(request, 'yourforms.html')
+ 
 def login_view(request):
    return render(request, 'login_view.html')
 
 ####        CLIENT VIEWS
-def clientlogin(request):
-  return render(request, 'registration/clientlogin.html') 
-          
-def clientprofile(request):
-  print('client profile hit')  
+
+class ClientCreate(LoginRequiredMixin, CreateView):
+  model = Client
+  user = User
+  fields = ['name', 'pronouns', 'email', 'age']
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
+
+def clientprofile(request): 
   gad7_form_responses = [
     {
       'gad7_response_q1': 1, 
-      'gad7_response_q2': 1, 
-      'gad7_response_q3': 1,
-      'gad7_response_q4': 1,
-      'gad7_response_q5': 1,
-      'gad7_response_q6': 1,
-      'gad7_response_q7': 1
+      'gad7_response_q2': 2, 
+      'gad7_response_q3': 3,
+      'gad7_response_q4': 3,
+      'gad7_response_q5': 3,
+      'gad7_response_q6': 3,
+      'gad7_response_q7': 3
     },
     {
       'gad7_response_q1': 2, 
@@ -73,30 +75,13 @@ def clientprofile(request):
   ]
   return render(request, 'client/clientprofile.html', { 'gad7_form_responses' : gad7_form_responses })
 
-def yourproviders(request):
-  return render(request, 'client/yourproviders.html')
-
 def clientportal(request):
   return render(request, 'client/portal.html')
- 
-def clientsignup(request):
-  error_message = ''
-  if request.method == 'POST':
-    # This is how to create a 'user' form object
-    # that includes the data from the browser
-    form = ClientSignupForm(request.POST)
-    if form.is_valid():
-      # This will add the user to the database
-      user = form.save()
-      # This is how we log a user in via code
-      login(request, user)
-      return redirect('clientprofile')
-    else:
-      error_message = 'Error with sign up - try again'
-  # A bad POST or a GET request, so render signup.html with an empty form
-  form = ClientSignupForm()
-  context = {'form': form, 'error_message': error_message}
-  return render(request, 'registration/clientsignup.html', context)
+
+
+
+# ----- GAD-7 (Sample Assessment) -----#
+
 
 def gad7(request):
   model = Assignment.Gad7
@@ -132,6 +117,12 @@ def read_user_gad7_forms(request):
 
 # def deletegad7(request):
 #   pass
+
+
+
+# ----- Client AWS Integration ----- #
+
+
 
 def add_photo_client(request, client_id):
   photo_file = request.FILES.get('photo-file', None)
