@@ -21,8 +21,11 @@
                     <li><a href="/">Home</a></li>
                     <li>About</li>
                     {% if user.is_authenticated %}
-		            <li><a href="{% url 'client_portal' %}">Client Portal</a></li>
-                    <li><a href="{% url 'provider_portal' %}">Provider Portal</a></li>
+                        {% if user.client %}
+		                    <li><a href="{% url 'client_portal' %}">Client Portal</a></li>
+                        {% else %}
+                            <li><a href="{% url 'provider_portal' %}">Provider Portal</a></li>
+                        {% endif %}
                     <li><a href="{% url 'logout' %}">Log Out</a></li>
                     {% else %}
                     <li><a href="{% url 'signup' %}">Signup</a></li>

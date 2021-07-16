@@ -27,7 +27,7 @@
     <div class="sub-nav-wrapper">
         <ul class="center" id="provider-sub-menu">
             {% if user.is_authenticated %}
-            <li class='sub'><a href="{% url 'provider_profile' %}">Your Profile</a></li>
+            <li class='sub'><a href="{% url 'provider_detail' request.user.provider.id %}">Your Profile</a></li>
           {% endif %}
 
         </ul>

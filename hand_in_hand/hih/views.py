@@ -46,10 +46,11 @@ class ClientCreate(LoginRequiredMixin, CreateView):
     form.instance.user = self.request.user
     return super().form_valid(form)
 
-def clientportal(request):
+def client_portal(request):
   return render(request, 'client/portal.html')
 
-def clientprofile(request): 
+def client_detail(request, client_id):
+  client = Client.objects.get(id=client_id)
   gad7_form_responses = [
     {
       'gad7_response_q1': 1, 
@@ -70,18 +71,8 @@ def clientprofile(request):
       'gad7_response_q7': 2
     },
   ]
-  return render(request, 'client/client_profile.html', { 'gad7_form_responses' : gad7_form_responses })
+  return render(request, 'client/client_detail.html', { 'gad7_form_responses' : gad7_form_responses, 'client':client })
 
-def clientdetail(request, client_id):
-  print('client detail hit')
-  client = Client.objects.get(id=client_id)
-  return render(request, 'client/client_profile.html', {
-    'client': client, 
-  })
-
-def allclients(request):
-  clients = Client.objects.all()
-  return render(request, 'client/show.html', {'clients': clients})
 # - Client AWS Integration - #
 def add_photo_client(request, client_id):
   photo_file = request.FILES.get('photo-file', None)
@@ -96,7 +87,7 @@ def add_photo_client(request, client_id):
       Photo.objects.create(url=url, client_id=client_id)
     except:
       print('An error has occured uploading the file to S3')
-  return redirect('clientdetail', client_id=client_id)
+  return redirect('client_detail', client_id=client_id)
 
 # --- Provider Specific Views --- #
 class ProviderCreate(LoginRequiredMixin, CreateView):
@@ -106,22 +97,13 @@ class ProviderCreate(LoginRequiredMixin, CreateView):
     form.instance.user = self.request.user
     return super().form_valid(form)
     
-def providerportal(request):
+def provider_portal(request):
   return render(request, 'provider/portal.html')
 
-def providerprofile(request):
-  return render(request, 'provider/provider_profile.html')
-
-def providerdetail(request, provider_id):
+def provider_detail(request, provider_id):
   provider = Provider.objects.get(id=provider_id)
-  print('hitting provider detail')
-  return render(request, 'provider/provider_profile.html', {
-    'provider': provider, 
-  })
+  return render(request, 'provider/provider_detail.html', { 'provider':provider })
 
-def allproviders(request):
-  providers = Provider.objects.all()
-  return render(request, 'provider/show.html', {'providers': providers})
 # - Provider AWS Integration - #
 def add_photo_provider(request, provider_id):
   photo_file = request.FILES.get('photo-file', None)
@@ -135,7 +117,7 @@ def add_photo_provider(request, provider_id):
       Photo.objects.create(url=url, provider_id=provider_id)
     except:
       print('An error has occured uploading the file to S3')
-  return redirect('providerdetail', provider_id=provider_id)
+  return redirect('provider_detail', provider_id=provider_id)
 
 # --- GAD-7 (Sample Assessment) --- #
 def uploadgad7(request):
