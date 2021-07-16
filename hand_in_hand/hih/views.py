@@ -51,6 +51,10 @@ class ClientCreate(LoginRequiredMixin, CreateView):
 def clientportal(request):
   return render(request, 'client/portal.html')
 
+def clientdetail(request, client_id):
+  client = Client.objects.get(id=client_id)
+  return render(request, 'client/client_profile.html', {'client': client_id})
+
 def clientprofile(request): 
   gad7_form_responses = [
     {
@@ -99,7 +103,7 @@ def uploadgad7(request, client_id):
     gad7_completion_date=date.today(),
     # gad7_score=gad7_response_q1+gad7_response_q2+gad7_response_q3+gad7_response_q4+gad7_response_q5+gad7_response_q6+gad7_response_q7
   )
-  g.client_id = client_id
+  g.client = client_id
   # test out if client_id is being written to db
   # print(g.client_id)
   # OR
@@ -167,23 +171,3 @@ def add_photo_provider(request, provider_id):
     except:
       print('An error has occured uploading the file to S3')
   return redirect('providerdetail', provider_id=provider_id)
-
-# --- GAD-7 (Sample Assessment) --- #
-def uploadgad7(request):
-  # UPDATE THIS TO ARRAY FIELD
-  g = Gad7FormResponse(
-    gad7_response_q1=request.POST.get('gad7-choice-0'), 
-    gad7_response_q2=request.POST.get('gad7-choice-1'), 
-    gad7_response_q3=request.POST.get('gad7-choice-2'), 
-    gad7_response_q4=request.POST.get('gad7-choice-3'), 
-    gad7_response_q5=request.POST.get('gad7-choice-4'),
-    gad7_response_q6=request.POST.get('gad7-choice-5'), 
-    gad7_response_q7=request.POST.get('gad7-choice-6')
-  )
-  g.save()
-  return redirect('home')
-
-# --- View Completed GAD-7 --- #
-def gad7(request):
-  model = Assignment.Gad7
-  return render(request, 'client/gad7.html', { 'model': model })

@@ -8,17 +8,17 @@ urlpatterns = [
   
   # --- CLIENT URLS --- #
   path('client/create/', views.ClientCreate.as_view(), name='client_create'),
-  path('client/portal/', views.clientportal, name='client_portal'),
-  path('clprofile/', views.clientprofile, name='client_profile'),
+  path('client/portal/', views.clientportal, name='clientportal'),
+  path('clprofile/', views.clientprofile, name='clientprofile'),
 
   # --- PROVIDER URLS --- #
-  path('provider/create/', views.ProviderCreate.as_view(), name='provider_create'),
-  path('provider/portal/', views.providerportal, name='provider_portal'),
-  path('prprofile/', views.providerprofile, name='provider_profile'),
+  path('provider/create/', views.providersignup, name='provider_create'),
+  path('provider/portal/', views.providerportal, name='providerportal'),
+  path('prprofile/', views.providerprofile, name='providerprofile'),
   
   # --- GAD-7 URLS --- #
   path('assignments/gad7/', views.gad7, name='gad7'),
-  path('client/<int:client_id>/upload/gad7data/', views.uploadgad7, name='uploadgad7'),
+  path('upload/gad7data/', views.uploadgad7, name='uploadgad7'),
 
   # --- INCOMPELTE PATHS --- #
 
