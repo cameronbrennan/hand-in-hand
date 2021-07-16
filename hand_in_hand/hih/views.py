@@ -52,27 +52,7 @@ def client_portal(request):
 @login_required
 def client_detail(request, client_id):
   client = Client.objects.get(id=client_id)
-  gad7_form_responses = [
-    {
-      'gad7_response_q1': 1, 
-      'gad7_response_q2': 2, 
-      'gad7_response_q3': 3,
-      'gad7_response_q4': 3,
-      'gad7_response_q5': 3,
-      'gad7_response_q6': 3,
-      'gad7_response_q7': 3
-    },
-    {
-      'gad7_response_q1': 2, 
-      'gad7_response_q2': 2, 
-      'gad7_response_q3': 2,
-      'gad7_response_q4': 2,
-      'gad7_response_q5': 2,
-      'gad7_response_q6': 2,
-      'gad7_response_q7': 2
-    },
-  ]
-  return render(request, 'client/client_detail.html', { 'gad7_form_responses' : gad7_form_responses, 'client':client })
+  return render(request, 'client/client_detail.html', { 'client':client })
 
 # - Client AWS Integration - #
 @login_required

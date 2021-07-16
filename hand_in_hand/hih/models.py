@@ -41,7 +41,6 @@ class Assignment(models.Model):
             "How often have you been bothered by becoming easily annoyed or irritable over the past 2 weeks?",
             "How often have you been bothered by feeling afraid as if something awful might happen over the past 2 weeks?"
         ]
-        # could make this an array as well and link the score to the indices
         choices = {
             'Not at all': 0,
             'Several days': 1,
