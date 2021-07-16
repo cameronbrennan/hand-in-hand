@@ -18,6 +18,7 @@ urlpatterns = [
   
   # --- GAD-7 URLS --- #
   path('assignments/gad7/', views.gad7, name='gad7'),
+  path('client/<int:client_id>/upload/gad7data/', views.uploadgad7, name='uploadgad7'),
 
   # --- INCOMPELTE PATHS --- #
 

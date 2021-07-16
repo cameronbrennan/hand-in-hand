@@ -62,7 +62,7 @@ class Gad7FormResponse(models.Model):
     gad7_response_q7 = models.IntegerField()
 
     gad7_completion_date = models.DateTimeField()
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    client_id = models.ForeignKey(Client, on_delete=models.CASCADE)
 
     # def compute_score(self):
     #     return self.gad7_response_q1 + self.gad7_response_q2 + self.gad7_response_q3 + self.gad7_response_q4 + self.gad7_response_q5 + self.gad7_response_q6 + self.gad7_response_q7

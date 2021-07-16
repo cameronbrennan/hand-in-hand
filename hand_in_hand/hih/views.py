@@ -28,6 +28,7 @@ def signup(request):
       return redirect('select_profile')
     else:
       error_message = 'Error with sign up - try again'
+      print(error_message)
   form = UserSignup()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
@@ -82,6 +83,8 @@ def gad7(request):
   return render(request, 'client/gad7.html', { 'model': model })
 
 # Test if this should take in client_id OR User.client_id
+
+# client.user_id
 def uploadgad7(request, client_id):
   g = Gad7FormResponse(
     gad7_response_q1=request.POST.get('gad7-choice-0'), 
@@ -99,6 +102,7 @@ def uploadgad7(request, client_id):
   # print(g.client_id)
   # OR
   # print(g.client_id)
+  print(g.client_id)
   g.save()
   return redirect('home')
 
