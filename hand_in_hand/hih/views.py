@@ -2,7 +2,7 @@
 from botocore.hooks import _FIRST
 from .forms import UserSignup
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -50,6 +50,10 @@ class ClientCreate(LoginRequiredMixin, CreateView):
     form.instance.user = self.request.user
     return super().form_valid(form)
 
+class ClientUpdate(LoginRequiredMixin, UpdateView):
+  model = Client
+  fields = ['pronouns', 'age']
+
 @login_required
 def client_portal(request):
   return render(request, 'client/portal.html')
@@ -57,8 +61,8 @@ def client_portal(request):
 @login_required
 def client_detail(request, client_id):
   client = Client.objects.get(id=client_id)
-  gad7s = client.Gad7FormResponse.get()
-  print(gad7s)
+  # gad7s = client.Gad7FormResponse.get()
+  # print(gad7s)
   return render(request, 'client/client_detail.html', {'client': client})
 
 def clientprofile(request, client_id):

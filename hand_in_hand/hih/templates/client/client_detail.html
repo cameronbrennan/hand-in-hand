@@ -12,6 +12,7 @@
           <p>Last Name: {{ client.user.last_name }}</p>
           <p>Email: {{ client.user.email }}</p>
           <p>Age: {{ client.age }}</p>
+          <a href="{% url 'client_update' client.pk %}">Edit</a>
         </div>
         <div class="card-action"> 
         </div>
