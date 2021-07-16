@@ -78,20 +78,16 @@ def clientprofile(request):
   ]
   return render(request, 'client/clientprofile.html', { 'gad7_form_responses' : gad7_form_responses })
 
-def clientportal(request):
-  return render(request, 'client/portal.html')
-
 # ----- GAD-7 (Sample Assessment) -----#
 
 # Complete gad7 view function
-def gad7(request, client_id):
-  client = Client.objects.get(id=client_id)
+def gad7(request):
   model = Assignment.Gad7
-  return render(request, 'client/gad7.html', { 'model': model, 'client': client })
+  return render(request, 'client/gad7.html', { 'model': model})
 
 def uploadgad7(request, client_id):
+  print(client_id)
   client = Client.objects.get(id=client_id)
-  print(client)
   g = Gad7FormResponse(
     gad7_response_q1=request.POST.get('gad7-choice-0'), 
     gad7_response_q2=request.POST.get('gad7-choice-1'), 
