@@ -20,5 +20,4 @@ urlpatterns = [
 
   # --- GAD-7 URLS --- #
   path('assignments/gad7/', views.gad7, name='gad7'),
-  
 ]
