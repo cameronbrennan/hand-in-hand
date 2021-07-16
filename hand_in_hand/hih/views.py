@@ -45,9 +45,11 @@ class ClientCreate(LoginRequiredMixin, CreateView):
     form.instance.user = self.request.user
     return super().form_valid(form)
 
+@login_required
 def client_portal(request):
   return render(request, 'client/portal.html')
 
+@login_required
 def client_detail(request, client_id):
   client = Client.objects.get(id=client_id)
   gad7_form_responses = [
@@ -73,6 +75,7 @@ def client_detail(request, client_id):
   return render(request, 'client/client_detail.html', { 'gad7_form_responses' : gad7_form_responses, 'client':client })
 
 # - Client AWS Integration - #
+@login_required
 def add_photo_client(request, client_id):
   photo_file = request.FILES.get('photo-file', None)
   print(request.FILES.get('photo-file'))
@@ -94,15 +97,18 @@ class ProviderCreate(LoginRequiredMixin, CreateView):
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
-    
+
+@login_required
 def provider_portal(request):
   return render(request, 'provider/portal.html')
 
+@login_required
 def provider_detail(request, provider_id):
   provider = Provider.objects.get(id=provider_id)
   return render(request, 'provider/provider_detail.html', { 'provider':provider })
 
 # - Provider AWS Integration - #
+@login_required
 def add_photo_provider(request, provider_id):
   photo_file = request.FILES.get('photo-file', None)
   if photo_file:
