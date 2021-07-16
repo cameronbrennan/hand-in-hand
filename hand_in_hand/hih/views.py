@@ -70,12 +70,12 @@ def clientprofile(request):
       'gad7_response_q7': 2
     },
   ]
-  return render(request, 'client/clientprofile.html', { 'gad7_form_responses' : gad7_form_responses })
+  return render(request, 'client/client_profile.html', { 'gad7_form_responses' : gad7_form_responses })
 
 def clientdetail(request, client_id):
   print('client detail hit')
   client = Client.objects.get(id=client_id)
-  return render(request, 'client/clientprofile.html', {
+  return render(request, 'client/client_profile.html', {
     'client': client, 
   })
 
@@ -110,12 +110,12 @@ def providerportal(request):
   return render(request, 'provider/portal.html')
 
 def providerprofile(request):
-  return render(request, 'provider/providerprofile.html')
+  return render(request, 'provider/provider_profile.html')
 
 def providerdetail(request, provider_id):
   provider = Provider.objects.get(id=provider_id)
   print('hitting provider detail')
-  return render(request, 'provider/providerprofile.html', {
+  return render(request, 'provider/provider_profile.html', {
     'provider': provider, 
   })
 
