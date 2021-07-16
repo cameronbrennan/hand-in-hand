@@ -1,29 +1,29 @@
 from django.db import models
+from django.urls import reverse
 from datetime import date
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
 
 # Create your models here.
 class Client(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True,)
-    name = models.CharField(max_length=200, null=True,)
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE,)
     pronouns = models.CharField(max_length=200, null=True,)
-    email = models.CharField(max_length=200, null=True,)
     age = models.IntegerField()
+    # provider = models.ForeignKey(Provider, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.user.first_name
+    def get_absolute_url(self):
+        return reverse('home')
     
 class Provider(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True,)
-    name = models.CharField(max_length=200, null=True,)
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE,)
     pronouns = models.CharField(max_length=200, null=True,)
-    email = models.CharField(max_length=200, null=True,)
     certification = models.CharField(max_length=150)
     about = models.TextField(max_length=500)
     
     def __str__(self):
-        return self.name
+        return self.user.first_name
     
 class Assignment(models.Model):
     date = models.DateField('date assigned')

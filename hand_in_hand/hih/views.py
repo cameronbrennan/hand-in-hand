@@ -1,3 +1,4 @@
+from .forms import UserSignup
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView
@@ -6,6 +7,8 @@ from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .models import Assignment, Gad7FormResponse, Client, Provider, Photo
+from datetime import date
+
 
 #### AWS PHOTO STUFF HERE
 import boto3
@@ -18,14 +21,14 @@ BUCKET = 'catcollector12'
 def signup(request):
   error_message=''
   if request.method == "POST":
-    form = UserCreationForm(request.POST)
+    form = UserSignup(request.POST)
     if form.is_valid():
       user = form.save()
       login(request, user)
       return redirect('select_profile')
     else:
       error_message = 'Error with sign up - try again'
-  form = UserCreationForm()
+  form = UserSignup()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
@@ -36,18 +39,11 @@ def home(request):
 def select_profile(request):
   return render(request, 'select_profile.html')
 
-def yourforms(request):
-  return render(request, 'yourforms.html')
- 
-def login_view(request):
-   return render(request, 'login_view.html')
-
 ####        CLIENT VIEWS
 
 class ClientCreate(LoginRequiredMixin, CreateView):
   model = Client
-  user = User
-  fields = ['name', 'pronouns', 'email', 'age']
+  fields = ['pronouns', 'age']
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
@@ -78,17 +74,15 @@ def clientprofile(request):
 def clientportal(request):
   return render(request, 'client/portal.html')
 
-
-
 # ----- GAD-7 (Sample Assessment) -----#
 
-
+# Complete gad7 view function
 def gad7(request):
   model = Assignment.Gad7
   return render(request, 'client/gad7.html', { 'model': model })
 
+# Test if this should take in client_id OR User.client_id
 def uploadgad7(request, client_id):
-  # UPDATE THIS TO ARRAY FIELD
   g = Gad7FormResponse(
     gad7_response_q1=request.POST.get('gad7-choice-0'), 
     gad7_response_q2=request.POST.get('gad7-choice-1'), 
@@ -100,29 +94,15 @@ def uploadgad7(request, client_id):
     gad7_completion_date=date.today(),
     # gad7_score=gad7_response_q1+gad7_response_q2+gad7_response_q3+gad7_response_q4+gad7_response_q5+gad7_response_q6+gad7_response_q7
   )
-  # WHERE DO WE LINK THIS TO A SPECIFIC CLIENT? IN HERE OR IN MODELS.PY?
-  # 
-  # g.client_id = client_id
+  g.client_id = client_id
+  # test out if client_id is being written to db
+  # print(g.client_id)
+  # OR
+  # print(g.client_id)
   g.save()
   return redirect('home')
 
-def read_user_gad7_forms(request):
-  gad7_forms = Gad7FormResponse.objects.all()
-  return render(request, 'client/forms', {'gad7_forms': gad7_forms})
-
-# def viewgad7(request):
-#   Needs to be completed when we have 
-#   user_gad7 = Gad7FormResponse.get(id='')
-#   return render(request, 'client/viewgad7.html', {'user_gad7': user_gad7})
-
-# def deletegad7(request):
-#   pass
-
-
-
 # ----- Client AWS Integration ----- #
-
-
 
 def add_photo_client(request, client_id):
   photo_file = request.FILES.get('photo-file', None)
@@ -139,9 +119,6 @@ def add_photo_client(request, client_id):
       print('An error has occured uploading the file to S3')
   return redirect('clientdetail', client_id=client_id)
 
-
-### 
-
 def clientdetail(request, client_id):
   print('client detail hit')
   client = Client.objects.get(id=client_id)
@@ -155,14 +132,8 @@ def allclients(request):
  
 ####        PROVIDER VIEWS 
 
-def providerlogin(request):
-  return render(request, 'registration/providerlogin.html') 
-
 def providerprofile(request):
   return render(request, 'provider/providerprofile.html')
-
-def yourclients(request):
-  return render(request, 'provider/yourclients.html')
 
 def providerportal(request):
   return render(request, 'provider/portal.html')
