@@ -81,7 +81,6 @@ def add_photo_client(request, client_id):
     s3 = boto3.client('s3')
     key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
     try:
-      # print(f"{key} -< 'key', {BUCKET} - 'bucket', {s3} - 's3'")
       s3.upload_fileobj(photo_file, BUCKET, key)
       url=f"{S3_BASE_URL}{BUCKET}/{key}"
       Photo.objects.create(url=url, client_id=client_id)
@@ -111,7 +110,6 @@ def add_photo_provider(request, provider_id):
     s3 = boto3.client('s3')
     key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
     try:
-      # print(f"{key} -< 'key', {BUCKET} - 'bucket', {s3} - 's3'")
       s3.upload_fileobj(photo_file, BUCKET, key)
       url=f"{S3_BASE_URL}{BUCKET}/{key}"
       Photo.objects.create(url=url, provider_id=provider_id)

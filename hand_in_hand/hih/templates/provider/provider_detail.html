@@ -1,5 +1,20 @@
 {% extends 'providerportalmain.html' %}
 {% block content %}
-<h1>Provider Profile</h1>
-
+<h1>My Profile</h1>
+<img class="responsive-img card-panel" src="{{provider.photo_set.last.url}}">    
+    {% if provider.photo_set.first %}
+      <form action="{% url 'add_photo_provider' provider.id %}" method='POST' enctype="multipart/form-data" class='card-panel'>
+        {% csrf_token %}
+        <input type="file" name="photo-file">
+        <br><br>
+        <input type="submit" class='btn' value='Change Photo'>
+      </form>
+    {% else %}
+      <form action="{% url 'add_photo_provider' provider.id %}" method='POST' enctype="multipart/form-data" class='card-panel'>
+        {% csrf_token %}
+        <input type="file" name="photo-file">
+        <br>
+        <input type="submit" class='btn' value='Upload Photo'>
+      </form>
+    {% endif %}
 {% endblock %}
