@@ -1,3 +1,4 @@
+from .forms import UserSignup
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView
@@ -18,14 +19,14 @@ BUCKET = 'catcollector12'
 def signup(request):
   error_message=''
   if request.method == "POST":
-    form = UserCreationForm(request.POST)
+    form = UserSignup(request.POST)
     if form.is_valid():
       user = form.save()
       login(request, user)
       return redirect('select_profile')
     else:
       error_message = 'Error with sign up - try again'
-  form = UserCreationForm()
+  form = UserSignup()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
@@ -40,8 +41,7 @@ def select_profile(request):
 
 class ClientCreate(LoginRequiredMixin, CreateView):
   model = Client
-  user = User
-  fields = ['name', 'pronouns', 'email', 'age']
+  fields = ['pronouns', 'age']
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)

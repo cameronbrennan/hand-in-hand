@@ -6,28 +6,26 @@ urlpatterns = [
   path('accounts/signup/', views.signup, name='signup'), # good
   path('select_profile/', views.select_profile, name='select_profile'), # good
   
-  #### CLIENT URLS
+  # --- CLIENT URLS --- #
   path('client/create/', views.ClientCreate.as_view(), name='client_create'),
   path('client/portal/', views.clientportal, name='clientportal'),
-  
-  ##### PROVIDER URLS
+  path('clprofile/', views.clientprofile, name='clientprofile'),
+
+  # --- PROVIDER URLS --- #
   path('provider/create/', views.providersignup, name='provider_create'),
   path('provider/portal/', views.providerportal, name='providerportal'),
-  
-  
+  path('prprofile/', views.providerprofile, name='providerprofile'),
   
   # --- GAD-7 URLS --- #
   path('assignments/gad7/', views.gad7, name='gad7'),
   path('upload/gad7data/', views.uploadgad7, name='uploadgad7'),
   
-  # --- BROKEN PATHS --- #
-  path('clprofile/', views.clientprofile, name='clientprofile'),
-  path('prprofile/', views.providerprofile, name='providerprofile'),
-
 
 
 
   
+  # --- INCOMPELTE PATHS --- #
+
   # LOOK AT THIS FOR DISPLAYING ALL CLIENTS
   path('client/all', views.allclients, name='allclients'),
   path('client/<int:client_id>/', views.clientdetail, name='clientdetail'),
