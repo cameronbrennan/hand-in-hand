@@ -19,7 +19,7 @@
                 </ul>
                 <ul class="right">
                     <li><a href="/">Home</a></li>
-		            <li><a href="{% url 'clientportal' %}">Client Portal</a></li>
+		            <li><a href="{% url 'client_portal' %}">Client Portal</a></li>
                 </ul>
             </div>
         </nav>
@@ -27,11 +27,8 @@
     <div class="sub-nav-wrapper"> 
         <ul class="center">
             {% if user.is_authenticated %}
-            <li class='sub'><a href="{% url 'clientprofile' %}">Your Profile</a></li>
+            <li class='sub'><a href="{% url 'client_profile' %}">Your Profile</a></li>
             <li class='sub'><a href="{% url 'gad7' %}">Fill out GAD-7</a><li>
-            {% else %}
-            <li class='sub'><a href="{% url 'clientlogin' %}">Client - Login</a></li>
-            <li class='sub'><a href="{% url 'clientsignup' %}">Client - Sign-up</a></li>
             <li class='sub'><a href="{% url 'gad7' %}">Fill out GAD-7</a><li>
           {% endif %}
         

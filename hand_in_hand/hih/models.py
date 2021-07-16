@@ -14,7 +14,7 @@ class Client(models.Model):
     def __str__(self):
         return self.user.first_name
     def get_absolute_url(self):
-        return reverse('home')
+        return reverse('client_portal')
     
 class Provider(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE,)
@@ -24,6 +24,8 @@ class Provider(models.Model):
     
     def __str__(self):
         return self.user.first_name
+    def get_absolute_url(self):
+        return reverse('provider_portal')
     
 class Assignment(models.Model):
     date = models.DateField('date assigned')
