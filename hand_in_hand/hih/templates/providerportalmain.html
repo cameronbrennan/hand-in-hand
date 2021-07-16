@@ -19,7 +19,7 @@
                 </ul>
                 <ul class="right">
                     <li><a href="/">Home</a></li>
-                    <li><a href="{% url 'providerportal' %}">Provider Portal</a></li>
+                    <li><a href="{% url 'provider_portal' %}">Provider Portal</a></li>
                 </ul>
             </div>
         </nav>
@@ -27,12 +27,7 @@
     <div class="sub-nav-wrapper">
         <ul class="center" id="provider-sub-menu">
             {% if user.is_authenticated %}
-            <li class='sub'><a href="{% url 'providerprofile' %}">Your Profile</a></li>
-            <li class='sub'><a href="{% url 'clients' %}">Your Clients</a></li>
-            <li class='sub'><a href="{% url 'yourforms' %}">Your Forms</a></li>
-            {% else %}
-            <li class='sub'><a href="{% url 'providerlogin' %}">Provider - Login</a></li>
-            <li class='sub'><a href="{% url 'providersignup' %}">Provider - Sign-up</a></li>
+            <li class='sub'><a href="{% url 'provider_profile' %}">Your Profile</a></li>
           {% endif %}
 
         </ul>
