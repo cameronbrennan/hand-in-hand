@@ -27,7 +27,7 @@
     <div class="sub-nav-wrapper"> 
         <ul class="center">
             {% if user.is_authenticated %}
-            <li class='sub'><a href="{% url 'client_profile' %}">Your Profile</a></li>
+            <li class='sub'><a href="{% url 'client_detail' request.user.client.id %}">Your Profile</a></li>
             <li class='sub'><a href="{% url 'gad7' %}">Fill out GAD-7</a><li>
           {% endif %}
         
