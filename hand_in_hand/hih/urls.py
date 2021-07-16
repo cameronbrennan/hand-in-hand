@@ -2,26 +2,34 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-  path('', views.home, name='home'),
-  path('yourforms/', views.yourforms, name='yourforms'),
-  path('successfullogin/', views.successfullogin, name='successfullogin'),
-  path('accounts/signup/', views.signup, name='signup'),
-  path('accounts/login/', views.login, name='login'),
-  path('login',views.login_view, name = 'login '),
+  path('', views.home, name='home'), # good
+  path('accounts/signup/', views.signup, name='signup'), # good
+  path('select_profile/', views.select_profile, name='select_profile'), # good
   
-  #### CLIENT URLS
-  path('clients/portal/', views.clientportal, name='clientportal'),
+  # --- CLIENT URLS --- #
+  path('client/create/', views.ClientCreate.as_view(), name='client_create'),
+  path('client/portal/', views.clientportal, name='clientportal'),
   path('clprofile/', views.clientprofile, name='clientprofile'),
-  path('clproviders/', views.yourproviders, name='providers'),
-  path('accounts/clientsignup/', views.clientsignup, name='clientsignup'),
-  path('registration/clientlogin/', views.clientlogin, name='clientlogin'),
+
+  # --- PROVIDER URLS --- #
+  path('provider/create/', views.providersignup, name='provider_create'),
+  path('provider/portal/', views.providerportal, name='providerportal'),
+  path('prprofile/', views.providerprofile, name='providerprofile'),
+  
+  # --- GAD-7 URLS --- #
   path('assignments/gad7/', views.gad7, name='gad7'),
   
-  ##### PROVIDER URLS
-  path('providers/portal/', views.providerportal, name='providerportal'),
-  path('prclients/', views.yourclients, name='clients'),
-  path('prprofile/', views.providerprofile, name='providerprofile'),
-  path('accounts/providersignup/', views.providersignup, name='providersignup'),
-  path('registration/providerlogin/', views.providerlogin, name='providerlogin'),
-  # path('assignments/gad7/', views.gad7, name='gad7'),
+
+
+
+  
+  # --- INCOMPELTE PATHS --- #
+
+  # LOOK AT THIS FOR DISPLAYING ALL CLIENTS
+  path('client/all', views.allclients, name='allclients'),
+  path('client/<int:client_id>/', views.clientdetail, name='clientdetail'),
+  path('client/<int:client_id>/add_photo_client/', views.add_photo_client, name='add_photo_client'),
+  path('provider/all', views.allproviders, name='allproviders'),
+  path('provider/<int:provider_id>/', views.providerdetail, name='providerdetail'),
+  path('provider/<int:provider_id>/add_photo_provider/', views.add_photo_provider, name='add_photo_provider'),
 ]

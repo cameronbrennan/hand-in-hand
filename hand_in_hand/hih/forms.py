@@ -1,19 +1,19 @@
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django import forms
 from django.forms import ModelForm
 from .models import Client, Provider
-from django.contrib.auth.models import User
+
+class UserSignup(UserCreationForm):
+  email = forms.EmailField()
+  first_name = forms.CharField(max_length=100)
+  last_name = forms.CharField(max_length=100)
+
+  class Meta:
+    model = User
+    fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
 class ClientSignupForm(ModelForm):
   class Meta:
     model = Client
-    fields = ['firstname', 'lastname', 'pronouns', 'email', 'phone', 'age', 'location']
-    
-    
-class ProviderSignupForm(ModelForm):
-  class Meta:
-    model = Provider
-    fields = ['firstname', 'lastname', 'pronouns', 'email', 'phone', 'certification', 'certnum', 'location']
-    
-class Test(ModelForm):
-  class Meta:
-    model = Client
-    fields = '__all__'
+    fields = ['pronouns', 'age']
