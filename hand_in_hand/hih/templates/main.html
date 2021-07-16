@@ -19,7 +19,7 @@
                 </ul>
                 <ul class="right">
                     <li><a href="/">Home</a></li>
-                    <li>About</li>
+                    <li><a href="{% url 'about' %}">About HiH</a></li>
                     {% if user.is_authenticated %}
 		            <li><a href="{% url 'clientportal' %}">Client Portal</a></li>
                     <li><a href="{% url 'providerportal' %}">Provider Portal</a></li>

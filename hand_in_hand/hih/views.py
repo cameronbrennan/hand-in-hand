@@ -38,6 +38,9 @@ def home(request):
 def select_profile(request):
   return render(request, 'select_profile.html')
 
+def about(request):
+  return render(request, 'about.html')
+
 ####        CLIENT VIEWS
 
 class ClientCreate(LoginRequiredMixin, CreateView):

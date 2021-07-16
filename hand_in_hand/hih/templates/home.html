@@ -1,5 +1,12 @@
 {% extends 'main.html' %}
 {% block content %}
-<h1>home</h1>
+<h1>Welcome to Hand in Hand</h1>
+<img class="responsive-img card-panel" src="/static/images/home.png">
+<a class='btn' href="{% url 'signup' %}">Signup</a></li>
+
+<br><br>
+
+<a class='btn' href="{% url 'login' %}">Login</a></li>
+</div>
 
 {% endblock %}

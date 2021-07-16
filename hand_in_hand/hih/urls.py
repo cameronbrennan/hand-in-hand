@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
   path('', views.home, name='home'), # good
   path('accounts/signup/', views.signup, name='signup'), # good
+  path('about/', views.about, name='about'), # good
   path('select_profile/', views.select_profile, name='select_profile'), # good
   
   # --- CLIENT URLS --- #

@@ -31,3 +31,6 @@ footer.page-footer {
   background-color: rgba(107, 98, 98, 0.11);
   color: white;
 }
+.card:hover{
+  opacity: .5;
+}
