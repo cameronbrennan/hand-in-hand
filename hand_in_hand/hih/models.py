@@ -55,9 +55,6 @@ class Assignment(models.Model):
         def __str__(self):
             return self.assignment_name
 
-        # can use JS to grab the values selected from the DOM and add them together
-        # get the template set up so a user can see all the questions first, then figure out method for computing
-
 class Gad7FormResponse(models.Model):
     gad7_response_q1 = models.IntegerField()
     gad7_response_q2 = models.IntegerField()
@@ -66,9 +63,6 @@ class Gad7FormResponse(models.Model):
     gad7_response_q5 = models.IntegerField()
     gad7_response_q6 = models.IntegerField()
     gad7_response_q7 = models.IntegerField()
-
-    def compute_score(self):
-        return self.gad7_q1_response + self.gad7_q2_response + self.gad7_q3_response + self.gad7_q4_response + self.gad7_q5_response + self.gad7_q6_response + self.gad7_q7_response
 
 class Photo(models.Model):
     url = models.CharField(max_length=200)

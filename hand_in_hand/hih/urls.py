@@ -19,5 +19,5 @@ urlpatterns = [
   path('provider/<int:provider_id>/add_photo_provider/', views.add_photo_provider, name='add_photo_provider'),
 
   # --- GAD-7 URLS --- #
-  path('assignments/gad7/', views.gad7, name='gad7'),
+  path('client/gad7/', views.gad7, name='gad7'),
 ]
